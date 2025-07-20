@@ -11,6 +11,11 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\TablesController;
+use App\Livewire\Permissions;
+use App\Livewire\Roles;
+use App\Livewire\Users;
+use App\Livewire\UsersGroup;
+use App\Livewire\UsersManagement;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,25 +39,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
 
-    Route::get('/tables/users', function () {
-        return view('pages/tables/users');
-    })->name('users');
-    
-    Route::get('/tables/users-group', function () {
-        return view('pages/tables/usersGroup');
-    })->name('usersGroup');
+    Route::get('/tables/users',[Users::class, 'render'])->name('users');
 
-    Route::get('/tables/users-management', function () {
-        return view('pages/tables/usersManagement');
-    })->name('usersManagement');
+    Route::get('/tables/users-group',[UsersGroup::class, 'render'])->name('users-group');
 
-    Route::get('/roles', function () {
-        return view('pages/roles/roles');
-    })->name('roles');
+    Route::get('/tables/users-management',[UsersManagement::class, 'render'])->name('users-management');
 
-    Route::get('/permissions', function () {
-        return view('pages/permissions/permissions');
-    })->name('permissions');
+    Route::get('/roles',[Roles::class, 'render'])->name('roles');
+
+    Route::get('/permissions',[Permissions::class, 'render'])->name('permissions');
 
     Route::get('/ecommerce/customers', [CustomerController::class, 'index'])->name('customers');
     Route::get('/ecommerce/orders', [OrderController::class, 'index'])->name('orders');

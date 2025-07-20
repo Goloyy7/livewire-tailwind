@@ -10,6 +10,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\TablesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,27 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
+
+    Route::get('/tables/users', function () {
+        return view('pages/tables/users');
+    })->name('users');
+    
+    Route::get('/tables/users-group', function () {
+        return view('pages/tables/usersGroup');
+    })->name('usersGroup');
+
+    Route::get('/tables/users-management', function () {
+        return view('pages/tables/usersManagement');
+    })->name('usersManagement');
+
+    Route::get('/roles', function () {
+        return view('pages/roles/roles');
+    })->name('roles');
+
+    Route::get('/permissions', function () {
+        return view('pages/permissions/permissions');
+    })->name('permissions');
+
     Route::get('/ecommerce/customers', [CustomerController::class, 'index'])->name('customers');
     Route::get('/ecommerce/orders', [OrderController::class, 'index'])->name('orders');
     Route::get('/ecommerce/invoices', [InvoiceController::class, 'index'])->name('invoices');
@@ -82,13 +104,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('credit-cards');
     Route::get('/finance/transactions', [TransactionController::class, 'index01'])->name('transactions');
     Route::get('/finance/transaction-details', [TransactionController::class, 'index02'])->name('transaction-details');
-    Route::get('/job/job-listing', [JobController::class, 'index'])->name('job-listing');
-    Route::get('/job/job-post', function () {
-        return view('pages/job/job-post');
-    })->name('job-post');    
-    Route::get('/job/company-profile', function () {
-        return view('pages/job/company-profile');
-    })->name('company-profile');
+    // Route::get('/job/job-listing', [JobController::class, 'index'])->name('job-listing');
+    // Route::get('/job/job-post', function () {
+    //     return view('pages/job/job-post');
+    // })->name('job-post');    
+    // Route::get('/job/company-profile', function () {
+    //     return view('pages/job/company-profile');
+    // })->name('company-profile');
     Route::get('/messages', function () {
         return view('pages/messages');
     })->name('messages');

@@ -13,6 +13,7 @@ use App\Livewire\UsersCreate;
 use App\Livewire\UsersGroup;
 use App\Livewire\UsersGroupCreate;
 use App\Livewire\UsersManagement;
+use App\Livewire\UsersManagementCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,12 +49,13 @@ Route::middleware(['auth'])->group(function () {
         // Route::get('/tables/users/create',[UsersCreate::class])->name('users-create');
         // Route::get('/tables/users/{id}/edit',[UsersCreate::class])->name('users-edit');
         
-        Route::get('/tables/users-group', UsersGroup::class)->name('users-group');
-        Route::get('/tables/users-group/create', UsersGroupCreate::class)->name('users-group-create');
-        Route::get('/tables/users-group/{id}/edit/', UsersGroupCreate::class)->name('users-group-edit');
+        Route::get('/users-group', UsersGroup::class)->name('users-group');
+        Route::get('/users-group/create', UsersGroupCreate::class)->name('users-group-create');
+        Route::get('/users-group/{id}/edit/', UsersGroupCreate::class)->name('users-group-edit');
 
-        Route::get('/tables/users-management',[UsersManagement::class, 'render'])->name('users-management');
-        Route::get('/tables/users-management/create', [UsersCreate::class, 'render'])->name('users-create');
+        Route::get('/users-management',UsersManagement::class)->name('users-management');
+        Route::get('/users-management/create', UsersManagementCreate::class)->name('users-management-create');
+        Route::get('/users-management/{id}/edit', UsersManagementCreate::class)->name('users-management-edit');
 
         Route::get('/roles', Roles::class)->name('roles');
         Route::get('/roles/create', RolesCreate::class)->name('roles-create');

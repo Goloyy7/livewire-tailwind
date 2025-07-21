@@ -29,7 +29,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_group_id',
     ];
+
+    public function userGroup()
+    {
+        return $this->belongsTo(UserGroup::class, 'user_group_id'); // Tambahkan foreign key
+    }
 
     public function groups()
     {

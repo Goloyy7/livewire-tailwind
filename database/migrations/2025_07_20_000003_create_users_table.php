@@ -20,10 +20,17 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('position')->nullable();
-            $table->foreignId('current_team_id')->nullable();
+            $table->unsignedBigInteger('user_group_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+        $table->foreign('user_group_id')
+              ->references('id')
+              ->on('user_groups')
+              ->nullOnDelete();
+    });
     }
 
     /**
@@ -31,6 +38,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+        $table->dropForeign(['user_group_id']);
+    });
         Schema::dropIfExists('users');
     }
 };

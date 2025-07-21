@@ -15,14 +15,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('user_group_members', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_group_id')->constrained('user_groups')->onDelete('cascade');
-            $table->timestamps();
-
-            $table->unique(['user_id', 'user_group_id']);
-        });
+        
     }
 
     public function down()

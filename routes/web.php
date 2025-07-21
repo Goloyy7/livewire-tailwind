@@ -1,15 +1,13 @@
 <?php
 
-use App\Livewire\Register;
+use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
 use App\Livewire\Login;
 use App\Livewire\Permissions;
 use App\Livewire\PermissionsCreate;
 use App\Livewire\Roles;
 use App\Livewire\RolesCreate;
 use App\Livewire\Users;
-use App\Livewire\UsersCreate;
 use App\Livewire\UsersGroup;
 use App\Livewire\UsersGroupCreate;
 use App\Livewire\UsersManagement;
@@ -36,9 +34,7 @@ Route::middleware('guest')->group(function () {
 // Protected routes
 Route::middleware(['auth'])->group(function () {
     // Dashboard routes
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
-    Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
     // User management routes
     Route::middleware(['role:admin'])->group(function () {

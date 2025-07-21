@@ -3,9 +3,9 @@
                 <header class="flex justify-between items-start mb-2">
                     <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Daftar Izin (Permissions)</h2>
                     <div class="relative inline-flex">
-                        <button class="px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
+                        <a href="{{ route('permissions-create')}}" class="px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
                             Tambah Izin
-                        </button>
+                        </a>
                     </div>
                 </header>
                 <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-4">Kelola hak akses</div>
@@ -41,37 +41,7 @@
                                 <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">2025-01-15</p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-right">
-                                <button class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-2">Edit</button>
-                                <button class="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">Hapus</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">edit users</p>
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">web</p>
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">2025-01-15</p>
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-right">
-                                <button class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-2">Edit</button>
-                                <button class="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">Hapus</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">view groups</p>
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">web</p>
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">2025-01-15</p>
-                            </td>
-                            <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-right">
-                                <button class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-2">Edit</button>
+                                <a href="{{ route('permissions-create')}}" class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-2">Edit</a>
                                 <button class="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">Hapus</button>
                             </td>
                         </tr>

@@ -5,9 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Login;
 use App\Livewire\Permissions;
+use App\Livewire\PermissionsCreate;
 use App\Livewire\Roles;
+use App\Livewire\RolesCreate;
 use App\Livewire\Users;
+use App\Livewire\UsersCreate;
 use App\Livewire\UsersGroup;
+use App\Livewire\UsersGroupCreate;
 use App\Livewire\UsersManagement;
 
 /*
@@ -38,10 +42,23 @@ Route::middleware(['auth'])->group(function () {
     // User management routes
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/tables/users',[Users::class, 'render'])->name('users');
+
+        
+        
+        // Route::get('/tables/users/create',[UsersCreate::class])->name('users-create');
+        // Route::get('/tables/users/{id}/edit',[UsersCreate::class])->name('users-edit');
+        
         Route::get('/tables/users-group',[UsersGroup::class, 'render'])->name('users-group');
+        Route::get('/tables/users-group/create', [UsersGroupCreate::class, 'render'])->name('users-group-create');
+
         Route::get('/tables/users-management',[UsersManagement::class, 'render'])->name('users-management');
+        Route::get('/tables/users-management/create', [UsersCreate::class, 'render'])->name('users-create');
+
         Route::get('/roles',[Roles::class, 'render'])->name('roles');
+        Route::get('/roles/create',[RolesCreate::class, 'render'])->name('roles-create');
+
         Route::get('/permissions',[Permissions::class, 'render'])->name('permissions');
+        Route::get('/permissions/create',[PermissionsCreate::class, 'render'])->name('permissions-create');
     });
 
         // Error handling

@@ -48,8 +48,9 @@ Route::middleware(['auth'])->group(function () {
         // Route::get('/tables/users/create',[UsersCreate::class])->name('users-create');
         // Route::get('/tables/users/{id}/edit',[UsersCreate::class])->name('users-edit');
         
-        Route::get('/tables/users-group',[UsersGroup::class, 'render'])->name('users-group');
-        Route::get('/tables/users-group/create', [UsersGroupCreate::class, 'render'])->name('users-group-create');
+        Route::get('/tables/users-group', UsersGroup::class)->name('users-group');
+        Route::get('/tables/users-group/create', UsersGroupCreate::class)->name('users-group-create');
+        Route::get('/tables/users-group/edit/{id}', UsersGroupCreate::class)->name('users-group-edit');
 
         Route::get('/tables/users-management',[UsersManagement::class, 'render'])->name('users-management');
         Route::get('/tables/users-management/create', [UsersCreate::class, 'render'])->name('users-create');

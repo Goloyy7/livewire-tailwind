@@ -41,6 +41,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(UserGroup::class, 'user_group_members');
     }
+    
+        public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
     public function management()
     {

@@ -13,6 +13,7 @@ class RolesCreate extends Component
     public $selectedPermissions = [];
     public $editMode = false;
     public $roleId;
+    public $allPermissions;
     
     protected $rules = [
         'role_name' => 'required|min:3',

@@ -95,8 +95,7 @@ class PermissionsCreate extends Component
 
     public function cancel()
     {
-        return redirect()->route('permissions')
-            ->layout('layouts.app');
+        return redirect()->route('permissions');
     }
 
     public function render()

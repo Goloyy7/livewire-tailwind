@@ -50,13 +50,14 @@ Route::middleware(['auth'])->group(function () {
         
         Route::get('/tables/users-group', UsersGroup::class)->name('users-group');
         Route::get('/tables/users-group/create', UsersGroupCreate::class)->name('users-group-create');
-        Route::get('/tables/users-group/edit/{id}', UsersGroupCreate::class)->name('users-group-edit');
+        Route::get('/tables/users-group/{id}/edit/', UsersGroupCreate::class)->name('users-group-edit');
 
         Route::get('/tables/users-management',[UsersManagement::class, 'render'])->name('users-management');
         Route::get('/tables/users-management/create', [UsersCreate::class, 'render'])->name('users-create');
 
-        Route::get('/roles',[Roles::class, 'render'])->name('roles');
-        Route::get('/roles/create',[RolesCreate::class, 'render'])->name('roles-create');
+        Route::get('/roles', Roles::class)->name('roles');
+        Route::get('/roles/create', RolesCreate::class)->name('roles-create');
+        Route::get('/roles/{roleId}/edit', RolesCreate::class)->name('roles-edit');
 
         Route::get('/permissions',Permissions::class)->name('permissions');
         Route::get('/permissions/create', PermissionsCreate::class)->name('permissions-create');

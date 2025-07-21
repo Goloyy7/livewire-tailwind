@@ -24,7 +24,7 @@
                                 Users Group
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                                Peran (Roles)
+                                Roles
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700">
                                 <span class="sr-only">Aksi</span>

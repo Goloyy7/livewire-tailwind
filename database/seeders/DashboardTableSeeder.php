@@ -264,16 +264,5 @@ class DashboardTableSeeder extends Seeder
     public function run()
     {
 
-        foreach($this->data as $d) {
-            for($i=0; $i<count($d['data']); $i++) {
-                DataFeed::create([
-                    'data_type' => $d['type'],
-                    'label' => (isset($d['labels'][$i]) ? $d['labels'][$i] : null),
-                    'data' => $d['data'][$i],
-                    'dataset_name' => (isset($d['dataset_name']) ? $d['dataset_name'] : null),
-                ]);
-            }
-        }
-
     }
 }

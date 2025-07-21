@@ -9,10 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
+    use HasRoles;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
@@ -28,6 +30,33 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function groups()
+    {
+        return $this->belongsToMany(UserGroup::class, 'user_group_members');
+    }
+
+    public function management()
+    {
+        return $this->hasOne(UsersManagement::class, 'user_id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->roles()->whereHas('permissions', function($query) use ($permission) {
+            $query->where('name', $permission);
+        })->exists();
+    }
 
     /**
      * The attributes that should be hidden for serialization.

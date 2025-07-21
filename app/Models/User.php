@@ -41,22 +41,7 @@ class User extends Authenticatable
         return $this->hasOne(UsersManagement::class, 'user_id');
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'role_user');
-    }
-
-    public function hasRole($role)
-    {
-        return $this->roles()->where('name', $role)->exists();
-    }
-
-    public function hasPermission($permission)
-    {
-        return $this->roles()->whereHas('permissions', function($query) use ($permission) {
-            $query->where('name', $permission);
-        })->exists();
-    }
+    // Roles & Permissions are handled by Spatie's HasRoles trait
 
     /**
      * The attributes that should be hidden for serialization.

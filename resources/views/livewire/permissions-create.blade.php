@@ -1,5 +1,4 @@
 <div>
-    <x-app-layout>
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
         <!-- Dashboard actions -->
@@ -32,7 +31,103 @@
         </div>
         
         <!-- Content -->
-        <x-permissions.permissions-create />
+        <div class="flex flex-col col-span-full bg-white dark:bg-gray-800 shadow-xs rounded-xl">
+    <div class="px-5 pt-5">
+        <header class="flex justify-between items-start mb-2">
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                Tambah Izin (Permission)
+            </h2>
+        </header>
+        <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-4">
+            Isi detail izin di bawah ini
+        </div>
     </div>
-</x-app-layout>
+
+    <div class="p-5">
+        <form wire:submit.prevent="save" class="space-y-4">
+            @if (session()->has('message'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Success!</strong>
+                    <span class="block sm:inline">{{ session('message') }}</span>
+                </div>
+            @endif
+
+            @if (session()->has('error'))
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline">{{ session('error') }}</span>
+                </div>
+            @endif
+
+            <h3 class="text-md font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Informasi Izin</h3>
+            
+            <div class="mb-4">
+                <label for="permission_name" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Nama Izin:</label>
+                <input type="text" id="permission_name" wire:model="permission_name" readonly
+                       placeholder="Nama izin akan dibuat otomatis"
+                       class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline border-gray-200 dark:border-gray-600">
+                @error('permission_name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="guard_name" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Guard Name:</label>
+                <select id="guard_name" wire:model="guard_name"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline border-gray-200 dark:border-gray-600">
+                    <option value="web">web</option>
+                    <option value="api">api</option>
+                </select>
+                @error('guard_name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="permission_description" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Deskripsi:</label>
+                <textarea id="permission_description" wire:model="permission_description"
+                          rows="3" 
+                          placeholder="Jelaskan kegunaan izin ini"
+                          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline border-gray-200 dark:border-gray-600"></textarea>
+                @error('permission_description') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <h3 class="text-md font-semibold text-gray-800 dark:text-gray-100 mb-4 mt-8 border-b border-gray-200 dark:border-gray-700 pb-2">Modul Terkait</h3>
+            
+            <div class="mb-4">
+                <label for="module" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Pilih Modul:</label>
+                <select id="module" wire:model="module"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-100 dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline border-gray-200 dark:border-gray-600">
+                    <option value="">-- Pilih Modul --</option>
+                    @foreach($modules as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                    @endforeach
+                </select>
+                @error('module') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+            </div>
+
+            <h3 class="text-md font-semibold text-gray-800 dark:text-gray-100 mb-4 mt-8 border-b border-gray-200 dark:border-gray-700 pb-2">Tipe Akses</h3>
+            
+            <div class="mb-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                @foreach($accessTypes as $value => $label)
+                    <label class="inline-flex items-center text-gray-700 dark:text-gray-300">
+                        <input type="radio" wire:model="access_type" value="{{ $value }}"
+                            class="form-radio h-5 w-5 text-purple-600 dark:bg-gray-700 dark:border-gray-600">
+                        <span class="ml-2">{{ $label }}</span>
+                    </label>
+                @endforeach
+            </div>
+            @error('access_type') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+
+            <div class="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+                <button type="button" wire:click="cancel"
+                    class="px-4 py-2 text-base font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-md hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-200">
+                    Batal
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">
+                    {{ $editMode ? 'Update Izin' : 'Simpan Izin' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    </div>
 </div>

@@ -58,8 +58,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/roles',[Roles::class, 'render'])->name('roles');
         Route::get('/roles/create',[RolesCreate::class, 'render'])->name('roles-create');
 
-        Route::get('/permissions',[Permissions::class, 'render'])->name('permissions');
-        Route::get('/permissions/create',[PermissionsCreate::class, 'render'])->name('permissions-create');
+        Route::get('/permissions',Permissions::class)->name('permissions');
+        Route::get('/permissions/create', PermissionsCreate::class)->name('permissions-create');
+        Route::get('/permissions/{permissionId}/edit', PermissionsCreate::class)->name('permissions-edit');
     });
 
         // Error handling

@@ -24,16 +24,6 @@
 
             <!-- Header: Right side -->
             <div class="flex items-center space-x-3">
-
-                <!-- Search Button with Modal -->
-                <x-modal-search />
-
-                <!-- Notifications button -->
-                <x-dropdown-notifications align="right" />
-
-                <!-- Info button -->
-                <x-dropdown-help align="right" />
-
                 <!-- Dark mode toggle -->
                 <x-theme-toggle />                
 
@@ -52,9 +42,15 @@
         @click.prevent="open = !open"
         :aria-expanded="open"                        
     >
-        <img class="w-8 h-8 rounded-full" src="" width="32" height="32" alt="" />
+        @if(Auth::user()->profile_photo_path)
+            <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_photo_path }}" width="32" height="32" alt="{{ Auth::user()->name }}" />
+        @else
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium text-white {{ $this->getRandomColor() }}">
+                {{ $this->getInitials(Auth::user()->name) }}
+            </div>
+        @endif
         <div class="flex items-center truncate">
-            <span class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white"></span>
+            <span class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">{{ Auth::user()->name }}</span>
             <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" viewBox="0 0 12 12">
                 <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
             </svg>

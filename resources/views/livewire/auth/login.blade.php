@@ -1,8 +1,8 @@
 <div>
-    <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">{{ __('Welcome back!') }}</h1>
-    @if (session('status'))
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ session('status') }}
+    <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mt-3">{{ __('Welcome back!') }}</h1>
+    @if (session('error'))
+        <div class="mb-4 font-medium text-sm text-red-600">
+            {{ session('error') }}
         </div>
     @endif   
     <!-- Form -->

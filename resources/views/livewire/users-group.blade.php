@@ -97,6 +97,7 @@
             
         <!-- Delete Modal -->
         <div x-show="$wire.confirmingDelete" 
+             x-cloak
              class="relative z-50" 
              aria-labelledby="modal-title" 
              role="dialog" 

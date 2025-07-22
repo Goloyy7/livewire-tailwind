@@ -20,6 +20,7 @@
         <div class="grid grid-cols-12 gap-6">
 
             <!-- Stats Cards -->
+            @can('view_users')
             <div class="col-span-12 sm:col-span-6 xl:col-span-4">
                 <div class="flex flex-col bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 transform transition-all duration-300 hover:scale-105">
                     <div class="px-5 py-5">
@@ -40,7 +41,9 @@
                     </div>
                 </div>
             </div>
+            @endcan
 
+            @can('view_roles')
             <div class="col-span-12 sm:col-span-6 xl:col-span-4">
                 <div class="flex flex-col bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 transform transition-all duration-300 hover:scale-105">
                     <div class="px-5 py-5">
@@ -61,7 +64,9 @@
                     </div>
                 </div>
             </div>
+            @endcan
 
+            @can('view_permissions')
             <div class="col-span-12 sm:col-span-6 xl:col-span-4">
                 <div class="flex flex-col bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 transform transition-all duration-300 hover:scale-105">
                     <div class="px-5 py-5">
@@ -82,8 +87,10 @@
                     </div>
                 </div>
             </div>
+            @endcan
 
             <!-- Recent Users Table -->
+            @can('view_dashboard')
             <div class="col-span-12 xl:col-span-6">
                 <div class="flex flex-col bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 h-[600px]">
                     <header class="px-5 py-4 border-b border-gray-100 dark:border-gray-700">
@@ -137,8 +144,10 @@
                     </div>
                 </div>
             </div>
+            @endcan
 
             <!-- Role Distribution Chart -->
+            @can('view_roles')
             <div class="col-span-12 xl:col-span-6">
                 <div class="flex flex-col bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 h-[600px]">
                     <header class="px-5 py-4 border-b border-gray-100 dark:border-gray-700">
@@ -179,7 +188,7 @@
                     </div>
                 </div>
             </div>
-            
+            @endcan
 
         </div>
 

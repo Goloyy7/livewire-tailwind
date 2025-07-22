@@ -29,7 +29,7 @@ class Login extends Component
             return redirect()->route('dashboard');
         } else {
             session()->flash('error', 'Alamat Email atau Password Anda salah!.');
-            return redirect()->route('auth.login');
+            return redirect()->route('login');
         }
     }
 }

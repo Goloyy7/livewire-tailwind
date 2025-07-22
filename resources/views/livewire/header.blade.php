@@ -42,8 +42,8 @@
         @click.prevent="open = !open"
         :aria-expanded="open"                        
     >
-        @if(Auth::user()->profile_photo_path)
-            <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_photo_path }}" width="32" height="32" alt="{{ Auth::user()->name }}" />
+        @if(Storage::url(Auth()->user()->profile_photo_path))
+            <img class="w-8 h-8 rounded-full" src="{{ Storage::url(Auth()->user()->profile_photo_path) }}" width="32" height="32" alt="{{ Auth::user()->name }}" />
         @else
             <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium text-white {{ $this->getRandomColor() }}">
                 {{ $this->getInitials(Auth::user()->name) }}

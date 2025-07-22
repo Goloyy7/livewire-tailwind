@@ -16,6 +16,11 @@ class UpdateProfileInformationForm extends Component
     public $photo;
     public $user;
 
+    public $listeners = [
+        'profilePhotoDeleted' => 'deleteProfilePhoto',
+        'profileUpdated' => '$refresh',
+    ];
+
     protected function rules()
     {
         return [
@@ -38,23 +43,47 @@ class UpdateProfileInformationForm extends Component
     {
         $this->validate();
 
-        if ($this->photo) {
-            $path = $this->photo->store('profile-photos', 'public');
-            
-            if ($this->user->profile_photo_path) {
-                Storage::disk('public')->delete($this->user->profile_photo_path);
+        try {
+            if ($this->photo) {
+                $path = $this->photo->store('profile-photos', 'public');
+                
+                if ($this->user->profile_photo_path) {
+                    Storage::disk('public')->delete($this->user->profile_photo_path);
+                }
+                
+                $this->user->forceFill([
+                    'profile_photo_path' => $path,
+                ])->save();
+
+                $this->photo = null; // Reset photo after successful upload
             }
+
+            $this->user->forceFill([
+                'name' => $this->state['name'],
+                'email' => $this->state['email'],
+            ])->save();
+
+            $this->dispatch('notify-success', 'Profile information updated successfully!');
+            $this->dispatch('profile-updated');
             
-            $this->user->profile_photo_path = $path;
-            $this->user->save();
+            // Refresh data user
+            $this->user = $this->user->fresh();
+            
+            // Update state dengan data terbaru
+            $this->state = [
+                'name' => $this->user->name,
+                'email' => $this->user->email,
+            ];
+
+            // Tampilkan notifikasi sukses
+            session()->flash('message', 'Profile updated successfully!');
+            
+            // Emit event untuk update header jika diperlukan
+            $this->dispatch('refresh-navigation-menu');
+
+        } catch (\Exception $e) {
+            $this->dispatch('notify-error', 'An error occurred while updating profile.');
         }
-
-        $this->user->forceFill([
-            'name' => $this->state['name'],
-            'email' => $this->state['email'],
-        ])->save();
-
-        $this->dispatch('profile-updated');
     }
 
     public function deleteProfilePhoto()

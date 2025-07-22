@@ -1,152 +1,76 @@
-<div>
-    <x-form-section submit="updateProfileInformation">
-        <x-slot name="title">
-            {{ __('Profile Information') }}
-        </x-slot>
+<div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="md:grid md:grid-cols-3 md:gap-6">
+                                <div class="md:col-span-1">
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Profile Information</h3>
+                                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                        Update your account's profile information and email address.
+                                    </p>
+                                </div>
 
-        <x-slot name="description">
-            {{ __('Update your account\'s profile information and email address.') }}
-        </x-slot>
+                                <div class="mt-8 md:mt-0 md:col-span-2"> {{-- Margin top untuk mobile, dihilangkan di desktop --}}
+                                    <form wire:submit.prevent="updateProfileInformation" class="space-y-6"> {{-- Menambah space-y untuk jarak antar grup input --}}
+                                        <div class="space-y-2">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Photo</label>
+                                            <div class="flex items-center gap-x-6">
+                                                <div class="relative">
+                                                    @if ($photo)
+                                                        <img src="{{ $photo->temporaryUrl() }}" alt="Preview"
+                                                            class="h-20 w-20 rounded-full object-cover ring-2 ring-violet-500 shadow">
+                                                    @else
+                                                        <img src="{{ Storage::url(auth()->user()->profile_photo_path) }}" alt="{{ auth()->user()->name }}"
+                                                            class="h-20 w-20 rounded-full object-cover ring-2 ring-white dark:ring-gray-800 shadow">
+                                                    @endif
+                                                    <button type="button"
+                                                        class="absolute bottom-0 right-0 rounded-full bg-white dark:bg-gray-800 p-1.5 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                                                        x-on:click="$refs.photo.click()">
+                                                        <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <input type="file" class="hidden" 
+                                                    wire:model="photo" 
+                                                    x-ref="photo"
+                                                    accept="image/*">
+                                                @error('photo') 
+                                                    <span class="text-red-600 text-sm">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            @if ($photo)
+                                                <div class="text-sm text-gray-500 dark:text-gray-400">
+                                                    Click 'Save Changes' to update your profile photo
+                                                </div>
+                                            @endif
+                                        </div>
 
-    <x-slot name="form">
-        <!-- Profile Photo -->
-        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-            <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
-                <!-- Profile Photo File Input -->
-                <input type="file" id="photo" class="hidden"
-                            wire:model.live="photo"
-                            x-ref="photo"
-                            accept="image/*"
-                            x-on:change="
-                                    photoName = $refs.photo.files[0].name;
-                                    const reader = new FileReader();
-                                    reader.onload = (e) => {
-                                        photoPreview = e.target.result;
-                                    };
-                                    reader.readAsDataURL($refs.photo.files[0]);
-                            " />
+                                        <div>
+                                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+                                            <input id="name" type="text"
+                                                wire:model.defer="state.name"
+                                                class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-sm focus:border-violet-500 focus:ring-violet-500">
+                                            @error('state.name') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
+                                        </div>
 
-                <x-label for="photo" value="{{ __('Photo') }}" class="mb-2" />
+                                        <div>
+                                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                                            <input id="email" type="email"
+                                                wire:model.defer="state.email"
+                                                class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-sm focus:border-violet-500 focus:ring-violet-500">
+                                            @error('state.email') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
+                                        </div>
 
-                <div class="mt-2 flex items-center space-x-4">
-                    <!-- Current Profile Photo -->
-                    <div x-show="! photoPreview" class="relative group">
-                        <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" 
-                            class="rounded-full h-20 w-20 object-cover ring-2 ring-white dark:ring-gray-700 shadow-lg transition duration-150 ease-in-out group-hover:shadow-xl">
-                        <div class="absolute inset-0 rounded-full bg-gray-900 bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                            <button type="button" x-on:click.prevent="$refs.photo.click()" class="text-white">
-                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </button>
+                                        <div class="flex justify-end pt-4"> {{-- Padding top untuk tombol, dan justify-end untuk menempatkan tombol di kanan --}}
+                                            <button type="submit"
+                                                class="inline-flex justify-center rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 dark:hover:bg-violet-500/90 transition-colors duration-150">
+                                                Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- New Profile Photo Preview -->
-                    <div x-show="photoPreview" style="display: none;" class="relative">
-                        <span class="block rounded-full h-20 w-20 bg-cover bg-no-repeat bg-center ring-2 ring-white dark:ring-gray-700 shadow-lg"
-                              x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
-                        </span>
-                        <button type="button" class="absolute bottom-0 right-0 -mb-1 -mr-1 p-1 rounded-full bg-red-500 text-white shadow-lg hover:bg-red-600 transition-colors duration-150"
-                                wire:click="deleteProfilePhoto">
-                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="flex flex-col space-y-2">
-                        <x-secondary-button type="button" x-on:click.prevent="$refs.photo.click()" class="whitespace-nowrap">
-                            {{ __('Change Photo') }}
-                        </x-secondary-button>
-
-                        @if ($this->user->profile_photo_path)
-                            <x-danger-button type="button" wire:click="deleteProfilePhoto" class="whitespace-nowrap">
-                                {{ __('Remove Photo') }}
-                            </x-danger-button>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        @endif
-
-                <x-input-error for="photo" class="mt-2" />
-            </div>
-
-        <!-- Name -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Name') }}" />
-            <div class="relative">
-                <x-input id="name" 
-                    type="text" 
-                    class="mt-1 block w-full pl-10" 
-                    wire:model.live="state.name" 
-                    required 
-                    autocomplete="name" />
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </div>
-            </div>
-            <x-input-error for="name" class="mt-2" />
-        </div>
-
-        <!-- Email -->
-        <div class="col-span-6 sm:col-span-4">
-            <x-label for="email" value="{{ __('Email') }}" />
-            <div class="relative">
-                <x-input id="email" 
-                    type="email" 
-                    class="mt-1 block w-full pl-10" 
-                    wire:model.live="state.email" 
-                    required 
-                    autocomplete="username" />
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                    </svg>
-                </div>
-            </div>
-            <x-input-error for="email" class="mt-2" />
-
-            <!-- Success Message -->
-            <div x-data="{ show: false }"
-                x-show="show"
-                x-on:profile-updated.window="
-                    show = true;
-                    setTimeout(() => show = false, 2000);
-                "
-                style="display: none;"
-                class="mt-4 py-3 px-4 rounded-md bg-green-50 dark:bg-green-900/50">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm text-green-700 dark:text-green-200">
-                            {{ __('Profile information has been updated successfully.') }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </x-slot>
-
-    <x-slot name="actions">
-        <x-action-message class="me-3" on="saved">
-            {{ __('Saved.') }}
-        </x-action-message>
-
-        <x-button wire:loading.attr="disabled" wire:target="photo">
-            {{ __('Save') }}
-        </x-button>
-    </x-slot>
-</x-form-section>
-
-</div>

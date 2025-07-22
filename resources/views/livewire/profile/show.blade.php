@@ -1,44 +1,27 @@
-<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-    <!-- Page Heading -->
-    <header class="bg-white dark:bg-gray-800 shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Profile') }}
-            </h2>
-        </div>
-    </header>
+    <div>
+    <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+        <!-- Page header -->
+        <div class="sm:flex sm:justify-between sm:items-center mb-8">
+            <!-- Left: Title -->
+            <div class="mb-4 sm:mb-0">
+                <h1 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Profile Account</h1>
+            </div>
 
-    <!-- Page Content -->
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="space-y-16"> <!-- Increased spacing -->
-                <!-- Profile Information -->
-                <div class="bg-white dark:bg-gray-800 shadow-lg sm:rounded-lg overflow-hidden">
-                    <div class="p-6 sm:p-8">
-                        <div class="max-w-xl mx-auto">
-                            @livewire('App\Livewire\Profile\UpdateProfileInformationForm')
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Update Password -->
-                <div class="bg-white dark:bg-gray-800 shadow-lg sm:rounded-lg overflow-hidden">
-                    <div class="p-6 sm:p-8">
-                        <div class="max-w-xl mx-auto">
-                            @livewire('App\Livewire\Profile\UpdatePasswordForm')
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Delete Account -->
-                <div class="bg-white dark:bg-gray-800 shadow-lg sm:rounded-lg overflow-hidden">
-                    <div class="p-6 sm:p-8">
-                        <div class="max-w-xl mx-auto">
-                            @livewire('App\Livewire\Profile\DeleteUserForm')
-                        </div>
-                    </div>
-                </div>
+            <!-- Right: Actions -->
+            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
             </div>
         </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12"> {{-- Menggunakan grid yang sama dengan dashboard --}}
+                    @livewire('profile.update-profile-information-form')
+
+                    @livewire('profile.update-password-form')
+
+                    @livewire('profile.delete-user-form')
+                </div>
+            </main>
+   
     </div>
 </div>

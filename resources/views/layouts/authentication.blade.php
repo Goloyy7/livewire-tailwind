@@ -5,8 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        @php
+            $websiteSettings = App\Models\WebSetting::first();
+            $title = $websiteSettings ? $websiteSettings->getName() : config('app.name');
+            $favicon = $websiteSettings && $websiteSettings->getLogo() ? asset('storage/' . $websiteSettings->getLogo()) : asset('favicon.ico');
+        @endphp
 
+        <title>{{ $title }}</title>
+        
+        <link rel="icon" type="image/x-icon" href="{{ $favicon }}">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,11 +50,7 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
                                 <!-- Logo -->
-                                <a class="block" href="{{ route('dashboard') }}">
-                                    <svg class="fill-violet-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                                        <path d="M31.956 14.8C31.372 6.92 25.08.628 17.2.044V5.76a9.04 9.04 0 0 0 9.04 9.04h5.716ZM14.8 26.24v5.716C6.92 31.372.63 25.08.044 17.2H5.76a9.04 9.04 0 0 1 9.04 9.04Zm11.44-9.04h5.716c-.584 7.88-6.876 14.172-14.756 14.756V26.24a9.04 9.04 0 0 1 9.04-9.04ZM.044 14.8C.63 6.92 6.92.628 14.8.044V5.76a9.04 9.04 0 0 1-9.04 9.04H.044Z" />
-                                    </svg> 
-                                </a>
+                                <img src="{{ $favicon }}" alt="Logo" width="32" height="32">
                             </div>
                         </div>
 

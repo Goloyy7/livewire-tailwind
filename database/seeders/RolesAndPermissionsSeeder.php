@@ -15,12 +15,30 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'view users']);
-        Permission::create(['name' => 'edit users']);
-        Permission::create(['name' => 'delete users']);
-        Permission::create(['name' => 'create users']);
-        Permission::create(['name' => 'manage roles']);
-        Permission::create(['name' => 'manage permissions']);
+        $permissions = [
+        'view_users',
+        'create_users',
+        'edit_users',
+        'delete_users',
+        'view_user_groups',
+        'create_user_groups',
+        'edit_user_groups',
+        'delete_user_groups',
+        'view_roles',
+        'create_roles',
+        'edit_roles',
+        'delete_roles',
+        'view_permissions',
+        'create_permissions',
+        'edit_permissions',
+        'delete_permissions',
+        'view_settings',
+        'edit_settings',
+    ];
+
+    foreach ($permissions as $permission) {
+        Permission::create(['name' => $permission]);
+    }
 
         // create roles and assign created permissions
         $role = Role::create(['name' => 'admin']);

@@ -1,16 +1,41 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        @php
+            $websiteSettings = App\Models\WebSetting::first();
+            $title = $websiteSettings ? $websiteSettings->getName() : config('app.name');
+            $favicon = $websiteSettings && $websiteSettings->getLogo() ? asset('storage/' . $websiteSettings->getLogo()) : asset('favicon.ico');
+        @endphp
+
+        <title>{{ $title }}</title>
+        <link rel="icon" type="image/x-icon" href="{{ $favicon }}">
+        <script>
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('settings-updated', () => {
+                    // Force reload the page to update title and favicon
+                    window.location.reload();
+                });
+            });
+        </script>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet" />
+
+        <script>
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('settings-updated', () => {
+                    window.location.reload();
+                });
+                Livewire.on('logo-updated', () => {
+                    window.location.reload();
+                });
+            });
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

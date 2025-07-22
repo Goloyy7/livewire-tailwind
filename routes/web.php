@@ -8,6 +8,7 @@ use App\Livewire\PermissionsCreate;
 use App\Livewire\Profile;
 use App\Livewire\Roles;
 use App\Livewire\RolesCreate;
+use App\Livewire\Settings;
 use App\Livewire\Users;
 use App\Livewire\UsersGroup;
 use App\Livewire\UsersGroupCreate;
@@ -38,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
     // User management routes
-    Route::middleware(['role:admin'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
         Route::get('/tables/users',[Users::class, 'render'])->name('users');
 
         
@@ -64,6 +65,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/permissions',Permissions::class)->name('permissions');
         Route::get('/permissions/create', PermissionsCreate::class)->name('permissions-create');
         Route::get('/permissions/{permissionId}/edit', PermissionsCreate::class)->name('permissions-edit');
+
+        Route::get('/settings',Settings::class)->name('settings');
     });
 
         // Error handling

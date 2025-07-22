@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Login;
 use App\Livewire\Permissions;
 use App\Livewire\PermissionsCreate;
+use App\Livewire\Profile;
 use App\Livewire\Roles;
 use App\Livewire\RolesCreate;
 use App\Livewire\Users;
@@ -48,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users-group', UsersGroup::class)->name('users-group');
         Route::get('/users-group/create', UsersGroupCreate::class)->name('users-group-create');
         Route::get('/users-group/{id}/edit/', UsersGroupCreate::class)->name('users-group-edit');
+        
+        // Profile routes
+        Route::get('/profile', Profile::class)->name('profile.show');
 
         Route::get('/users-management',UsersManagement::class)->name('users-management');
         Route::get('/users-management/create', UsersManagementCreate::class)->name('users-management-create');

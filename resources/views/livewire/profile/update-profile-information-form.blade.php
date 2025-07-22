@@ -17,34 +17,44 @@
                                                     @if ($photo)
                                                         <img src="{{ $photo->temporaryUrl() }}" alt="Preview"
                                                             class="h-20 w-20 rounded-full object-cover ring-2 ring-violet-500 shadow">
-                                                    @else
-                                                        <img src="{{ Storage::url(auth()->user()->profile_photo_path) }}" alt="{{ auth()->user()->name }}"
+                                                    @elseif ($user->profile_photo_path)
+                                                        <img src="{{ Storage::url($user->profile_photo_path) }}" alt="{{ $user->name }}"
                                                             class="h-20 w-20 rounded-full object-cover ring-2 ring-white dark:ring-gray-800 shadow">
+                                                    @else
+                                                        <div class="h-20 w-20 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                                                            <span class="text-2xl font-medium text-gray-600 dark:text-gray-300">
+                                                                {{ $this->getInitials($user->name) }}
+                                                            </span>
+                                                        </div>
                                                     @endif
+                                                </div>
+                                                
+                                                <!-- Upload Button -->
+                                                <div class="flex items-center">
+                                                    <input type="file" id="photo" wire:model="photo" class="hidden" accept="image/*">
                                                     <button type="button"
-                                                        class="absolute bottom-0 right-0 rounded-full bg-white dark:bg-gray-800 p-1.5 shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
-                                                        x-on:click="$refs.photo.click()">
-                                                        <svg class="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                        </svg>
+                                                        onclick="document.getElementById('photo').click()"
+                                                        class="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:text-gray-500 dark:hover:text-gray-400 focus:outline-none focus:border-violet-500 focus:ring focus:ring-violet-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition">
+                                                        <div class="flex items-center">
+                                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                                            </svg>
+                                                            <span wire:loading.remove wire:target="photo">Upload Photo</span>
+                                                            <span wire:loading wire:target="photo">Uploading...</span>
+                                                        </div>
                                                     </button>
                                                 </div>
-                                                <input type="file" class="hidden" 
-                                                    wire:model="photo" 
-                                                    x-ref="photo"
-                                                    accept="image/*">
-                                                @error('photo') 
-                                                    <span class="text-red-600 text-sm">{{ $message }}</span>
-                                                @enderror
                                             </div>
-                                            @if ($photo)
-                                                <div class="text-sm text-gray-500 dark:text-gray-400">
-                                                    Click 'Save Changes' to update your profile photo
-                                                </div>
-                                            @endif
+
+                                            <!-- Error Message -->
+                                            @error('photo') 
+                                                <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                            @enderror
+
+                                            <!-- Help Text -->
+                                            <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                                JPG, GIF or PNG. Max size of 2MB.
+                                            </p>
                                         </div>
 
                                         <div>

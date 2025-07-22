@@ -12,23 +12,13 @@ class UpdateProfileInformationForm extends Component
 {
     use WithFileUploads;
 
-    public $state = [];
     public $photo;
+    public $state = [];
     public $user;
 
-    public $listeners = [
-        'profilePhotoDeleted' => 'deleteProfilePhoto',
-        'profileUpdated' => '$refresh',
+    protected $listeners = [
+        'refresh-profile-form' => '$refresh'
     ];
-
-    protected function rules()
-    {
-        return [
-            'state.name' => ['required', 'string', 'max:255'],
-            'state.email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::id()],
-            'photo' => ['nullable', 'image', 'max:1024'],
-        ];
-    }
 
     public function mount()
     {
@@ -36,6 +26,15 @@ class UpdateProfileInformationForm extends Component
         $this->state = [
             'name' => $this->user->name,
             'email' => $this->user->email,
+        ];
+    }
+
+    protected function rules()
+    {
+        return [
+            'state.name' => ['required', 'string', 'max:255'],
+            'state.email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::id()],
+            'photo' => ['nullable', 'image', 'max:1024'],
         ];
     }
 
@@ -55,7 +54,11 @@ class UpdateProfileInformationForm extends Component
                     'profile_photo_path' => $path,
                 ])->save();
 
-                $this->photo = null; // Reset photo after successful upload
+                $this->photo = null;
+                
+                // Dispatch events for updates
+                $this->dispatch('profile-photo-updated');
+                $this->dispatch('refresh-profile-form');
             }
 
             $this->user->forceFill([
@@ -64,37 +67,13 @@ class UpdateProfileInformationForm extends Component
             ])->save();
 
             $this->dispatch('notify-success', 'Profile information updated successfully!');
-            $this->dispatch('profile-updated');
             
-            // Refresh data user
-            $this->user = $this->user->fresh();
-            
-            // Update state dengan data terbaru
-            $this->state = [
-                'name' => $this->user->name,
-                'email' => $this->user->email,
-            ];
-
-            // Tampilkan notifikasi sukses
-            session()->flash('message', 'Profile updated successfully!');
-            
-            // Emit event untuk update header jika diperlukan
-            $this->dispatch('refresh-navigation-menu');
+            // Refresh the component
+            $this->mount();
 
         } catch (\Exception $e) {
             $this->dispatch('notify-error', 'An error occurred while updating profile.');
         }
-    }
-
-    public function deleteProfilePhoto()
-    {
-        if ($this->user->profile_photo_path) {
-            Storage::disk('public')->delete($this->user->profile_photo_path);
-            $this->user->profile_photo_path = null;
-            $this->user->save();
-        }
-
-        $this->dispatch('profile-photo-deleted');
     }
 
     public function render()

@@ -20,6 +20,11 @@ class Header extends Component
         'bg-teal-500',
     ];
 
+    protected $listeners = [
+        'profile-photo-updated' => '$refresh',
+        'refresh-navigation-menu' => '$refresh'
+    ];
+
     public function mount($variant = 'v1')
     {
         $this->variant = $variant;

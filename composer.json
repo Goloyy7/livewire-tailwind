@@ -3,12 +3,6 @@
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
-    "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/salmanzafar/agent"
-    }
-],
     "license": "MIT",
     "require": {
         "php": "^8.2",

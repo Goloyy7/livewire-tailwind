@@ -30,15 +30,6 @@
                     </div>
                 </div>
 
-                <!-- Browser Sessions -->
-                <div class="bg-white dark:bg-gray-800 shadow-lg sm:rounded-lg overflow-hidden">
-                    <div class="p-6 sm:p-8">
-                        <div class="max-w-xl mx-auto">
-                            @livewire('App\Livewire\Profile\LogoutOtherBrowserSessionForm')
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Delete Account -->
                 <div class="bg-white dark:bg-gray-800 shadow-lg sm:rounded-lg overflow-hidden">
                     <div class="p-6 sm:p-8">

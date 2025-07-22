@@ -41,8 +41,8 @@
                             <th class="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                                 Deskripsi
                             </th>
-                            <th class="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700">
-                                <span class="sr-only">Aksi</span>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                                Aksi
                             </th>
                         </tr>
                     </thead>
@@ -53,7 +53,9 @@
                                 <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{{ $item->name }}</p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
-                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{{ $item->description }}</p>
+                                <p class="text-gray-900 dark:text-gray-100 whitespace-no-wrap">
+                                    {{ $item->description ?? 'Tidak ada deskripsi' }}
+                                </p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-right">
                                 @can('edit_user_groups')

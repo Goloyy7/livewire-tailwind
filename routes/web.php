@@ -35,18 +35,11 @@ Route::middleware('guest')->group(function () {
 
 // Protected routes
 Route::middleware(['auth'])->group(function () {
-    // Dashboard routes
+    // Dashboard routes - accessible by all authenticated users
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
-    // User management routes
+    // Admin only routes
     Route::middleware(['auth'])->group(function () {
-        Route::get('/tables/users',[Users::class, 'render'])->name('users');
-
-        
-        
-        // Route::get('/tables/users/create',[UsersCreate::class])->name('users-create');
-        // Route::get('/tables/users/{id}/edit',[UsersCreate::class])->name('users-edit');
-        
         Route::get('/users-group', UsersGroup::class)->name('users-group');
         Route::get('/users-group/create', UsersGroupCreate::class)->name('users-group-create');
         Route::get('/users-group/{id}/edit/', UsersGroupCreate::class)->name('users-group-edit');

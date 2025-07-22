@@ -34,6 +34,7 @@ class RolesAndPermissionsSeeder extends Seeder
         'delete_permissions',
         'view_settings',
         'edit_settings',
+        'view_dashboard',
     ];
 
     foreach ($permissions as $permission) {

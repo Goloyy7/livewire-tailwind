@@ -1,27 +1,22 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Users;
 
+use Spatie\Permission\Models\Role;
 use Livewire\Component;
+use App\Models\User as UserModel;
+use App\Models\UserGroup;
 use Livewire\WithPagination;
-use Livewire\Features\SupportPagination\WithPagination as LivewirePagination;
-use App\Models\Permission;
-use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app')]
-class Permissions extends Component
+class Users extends Component
 {
     use WithPagination;
-
-    public $search = '';
     public $deleteId = '';
     public $confirmingDelete = false;
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
+    protected $paginationTheme = 'tailwind';
 
+    
     public function confirmDelete($id)
     {
         $this->confirmingDelete = true;
@@ -32,7 +27,7 @@ class Permissions extends Component
     {
         if ($this->deleteId) {
             try {
-                $permission = Permission::find($this->deleteId);
+                $permission = UserModel::find($this->deleteId);
                 if ($permission) {
                     $permission->delete();
                     session()->flash('message', 'Izin berhasil dihapus!');
@@ -44,17 +39,14 @@ class Permissions extends Component
         $this->confirmingDelete = false;
         $this->deleteId = '';
     }
-
     public function render()
     {
-        return view('livewire.permissions', [
-            'permissions' => Permission::when($this->search, function($query) {
-                return $query->where('name', 'like', '%' . $this->search . '%')
-                           ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
+        return view('livewire.users.users', [
+            'roles' => Role::all(),
+            'userGroups' => UserGroup::all(),
+            'users' => UserModel::with(['roles', 'userGroup'])
             ->orderBy('created_at', 'desc')
-            ->paginate(10),
-            'confirmingDelete' => $this->confirmingDelete,
+            ->paginate(10)
         ]);
     }
 }

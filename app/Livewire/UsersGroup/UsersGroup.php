@@ -1,26 +1,21 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\UsersGroup;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Role as RolesModel;
+use App\Models\UserGroup as UsersGroupModel; 
 
-class Roles extends Component
+class UsersGroup extends Component
 {
     use WithPagination;
-    protected $listeners = ['roleCreated' => '$refresh'];
+
     public $deleteId = '';
     public $confirmingDelete = false;
+
     protected $paginationTheme = 'tailwind';
 
-    public function render()
-    {
-        return view('livewire.roles', [
-            'roles' => RolesModel::orderBy('created_at', 'desc')->paginate(10),
-        ]);
-    }
-
+    
     public function confirmDelete($id)
     {
         $this->confirmingDelete = true;
@@ -31,9 +26,9 @@ class Roles extends Component
     {
         if ($this->deleteId) {
             try {
-                $roles = RolesModel::find($this->deleteId);
-                if ($roles) {
-                    $roles->delete();
+                $permission = UsersGroupModel::find($this->deleteId);
+                if ($permission) {
+                    $permission->delete();
                     session()->flash('message', 'Izin berhasil dihapus!');
                 }
             } catch (\Exception $e) {
@@ -42,5 +37,18 @@ class Roles extends Component
         }
         $this->confirmingDelete = false;
         $this->deleteId = '';
+    }
+
+    public function render()
+    {
+        return view('livewire.users-group.users-group', [
+            'dataGroup' => UsersGroupModel::orderBy('created_at', 'desc')->paginate(3)
+        ]);
+    }
+
+    public function delete($id)
+    {
+        UsersGroupModel::findOrFail($id)->delete();
+        session()->flash('message', 'Grup berhasil dihapus.');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Permissions;
 
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
@@ -114,7 +114,7 @@ class PermissionsCreate extends Component
             'delete' => 'Delete'
         ];
 
-        return view('livewire.permissions-create', [
+        return view('livewire.permissions.permissions-create', [
             'modules' => $modules,
             'accessTypes' => $accessTypes
         ]);

@@ -3,17 +3,16 @@
 use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Login;
-use App\Livewire\Permissions;
-use App\Livewire\PermissionsCreate;
+use App\Livewire\Permissions\Permissions;
+use App\Livewire\Permissions\PermissionsCreate;
 use App\Livewire\Profile\Show;
-use App\Livewire\Roles;
-use App\Livewire\RolesCreate;
+use App\Livewire\Roles\Roles;
+use App\Livewire\Roles\RolesCreate;
 use App\Livewire\Settings;
-use App\Livewire\Users;
-use App\Livewire\UsersGroup;
-use App\Livewire\UsersGroupCreate;
-use App\Livewire\UsersManagement;
-use App\Livewire\UsersManagementCreate;
+use App\Livewire\UsersGroup\UsersGroup;
+use App\Livewire\UsersGroup\UsersGroupCreate;
+use App\Livewire\Users\Users;
+use App\Livewire\Users\UsersCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +46,9 @@ Route::middleware(['auth'])->group(function () {
         // Profile routes
         Route::get('/profile', Show::class)->name('profile.show');
 
-        Route::get('/users-management',UsersManagement::class)->name('users-management');
-        Route::get('/users-management/create', UsersManagementCreate::class)->name('users-management-create');
-        Route::get('/users-management/{id}/edit', UsersManagementCreate::class)->name('users-management-edit');
+        Route::get('/users-management',Users::class)->name('users-management');
+        Route::get('/users-management/create', UsersCreate::class)->name('users-management-create');
+        Route::get('/users-management/{id}/edit', UsersCreate::class)->name('users-management-edit');
 
         Route::get('/roles', Roles::class)->name('roles');
         Route::get('/roles/create', RolesCreate::class)->name('roles-create');

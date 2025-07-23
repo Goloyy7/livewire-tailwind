@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\UsersGroup;
 
 use Livewire\Component;
 use App\Models\UserGroup as UsersGroupModel;
@@ -51,7 +51,7 @@ class UsersGroupCreate extends Component
 
     public function render()
     {
-        return view('livewire.users-group-create');
+        return view('livewire.users-group.users-group-create');
     }
 
     public function cancel()

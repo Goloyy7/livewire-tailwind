@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Roles;
 
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -81,7 +81,7 @@ class RolesCreate extends Component
             return explode('_', $permission->name)[1] ?? 'other';
         });
         
-        return view('livewire.roles-create', [
+        return view('livewire.roles.roles-create', [
             'permissions' => $permissions
         ]);
     }

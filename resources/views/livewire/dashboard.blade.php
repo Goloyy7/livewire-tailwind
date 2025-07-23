@@ -123,7 +123,17 @@
                                         <td class="p-2 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium text-white mr-3 bg-blue-500">
-                                                    {{ strtoupper(substr($user->name, 0, 2)) }}
+                                                    @if($user->profile_photo_path)
+                                                        <img class="w-8 h-8 object-cover rounded-full" 
+                                                            src="{{ Storage::url($user->profile_photo_path) }}" 
+                                                            width="32" 
+                                                            height="32" 
+                                                            alt="{{ $user->name }}" />
+                                                    @else
+                                                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium text-white">
+                                                            {{ strtoupper(substr($user->name, 0, 2)) }}
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div class="text-gray-800 dark:text-gray-100 font-medium">{{ $user->name }}</div>
                                             </div>

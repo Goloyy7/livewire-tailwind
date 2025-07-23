@@ -173,9 +173,17 @@
                         </a>
                     </li>
                     @endcan
-
+                </ul>
+            </div>
+            
+            @can('view_settings')
+            <div>
+                <h3 class="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
+                    <span class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">•••</span>
+                    <span class="lg:hidden lg:sidebar-expanded:block 2xl:block">Settings</span>
+                </h3>
+                <ul class="mt-3">
                     <!-- Settings -->
-                    {{-- @canany('view_permissions') --}}
                     <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r @if(in_array(Request::segment(1), ['settings'])){{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif">
                         <a class="block text-gray-800 dark:text-gray-100 truncate transition @if(!in_array(Request::segment(1), ['settings'])){{ 'hover:text-gray-900 dark:hover:text-white' }}@endif" href="{{ route('settings') }}">
                             <div class="flex items-center justify-between">
@@ -198,10 +206,9 @@
                             </div>
                         </a>
                     </li>
-                    {{-- @endcan --}}
                 </ul>
             </div>
-            
+            @endcan
         </div>
 
         <!-- Expand / collapse button -->

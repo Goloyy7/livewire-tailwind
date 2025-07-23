@@ -28,8 +28,8 @@
                                         </div>
 
                                         <!-- Upload Button -->
+                                        @can('edit_settings')
                                         <div class="flex items-center">
-                                            @can('edit_settings')
                                             <input type="file" id="logo" wire:model.live="newLogo" class="hidden" accept="image/*">
                                             <button type="button"
                                                 wire:loading.attr="disabled"

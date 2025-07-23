@@ -60,7 +60,7 @@
                                         <div>
                                             <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
                                             <input id="name" type="text"
-                                                wire:model.defer="state.name"
+                                                wire:model="state.name"
                                                 class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-sm focus:border-violet-500 focus:ring-violet-500">
                                             @error('state.name') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
                                         </div>
@@ -68,7 +68,7 @@
                                         <div>
                                             <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
                                             <input id="email" type="email"
-                                                wire:model.defer="state.email"
+                                                wire:model="state.email"
                                                 class="mt-1 block w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-sm focus:border-violet-500 focus:ring-violet-500">
                                             @error('state.email') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
                                         </div>
@@ -81,6 +81,33 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Notification -->
+                        <div x-data="{ show: false, message: '', type: 'success' }"
+                             x-on:notify-success.window="show = true; message = $event.detail; type = 'success'; setTimeout(() => { show = false }, 3000)"
+                             x-on:notify-error.window="show = true; message = $event.detail; type = 'error'; setTimeout(() => { show = false }, 3000)"
+                             x-show="show"
+                             x-transition:enter="transition ease-out duration-300"
+                             x-transition:enter-start="opacity-0 transform -translate-y-2"
+                             x-transition:enter-end="opacity-100 transform translate-y-0"
+                             x-transition:leave="transition ease-in duration-200"
+                             x-transition:leave-start="opacity-100 transform translate-y-0"
+                             x-transition:leave-end="opacity-0 transform -translate-y-2"
+                             class="fixed top-4 right-4 z-50"
+                             style="display: none;">
+                            <div x-bind:class="{
+                                'bg-green-500': type === 'success',
+                                'bg-red-500': type === 'error'
+                            }" class="rounded-lg shadow-lg p-4 text-white flex items-center space-x-3">
+                                <svg x-show="type === 'success'" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <svg x-show="type === 'error'" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                                <span x-text="message"></span>
                             </div>
                         </div>
                     </div>

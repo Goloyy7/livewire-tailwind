@@ -29,6 +29,14 @@ class UpdateProfileInformationForm extends Component
         ];
     }
 
+    public function updated($field)
+    {
+        if (str_starts_with($field, 'state.')) {
+            $key = str_replace('state.', '', $field);
+            $this->user->$key = $this->state[$key];
+        }
+    }
+
     protected function rules()
     {
         return [
@@ -55,10 +63,6 @@ class UpdateProfileInformationForm extends Component
                 ])->save();
 
                 $this->photo = null;
-                
-                // Dispatch events for updates
-                $this->dispatch('profile-photo-updated');
-                $this->dispatch('refresh-profile-form');
             }
 
             $this->user->forceFill([
@@ -66,14 +70,28 @@ class UpdateProfileInformationForm extends Component
                 'email' => $this->state['email'],
             ])->save();
 
+            // Dispatch events for updates
+            $this->dispatch('profile-photo-updated');
+            $this->dispatch('refresh-profile-form');
             $this->dispatch('notify-success', 'Profile information updated successfully!');
-            
-            // Refresh the component
-            $this->mount();
 
         } catch (\Exception $e) {
             $this->dispatch('notify-error', 'An error occurred while updating profile.');
         }
+    }
+
+    public function getInitials($name)
+    {
+        $words = explode(' ', trim($name));
+        $initials = '';
+        
+        foreach ($words as $word) {
+            if (!empty($word)) {
+                $initials .= strtoupper(substr($word, 0, 1));
+            }
+        }
+        
+        return strlen($initials) > 2 ? substr($initials, 0, 2) : $initials;
     }
 
     public function render()
